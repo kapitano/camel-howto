@@ -10,3 +10,5 @@ For more help see the Apache Camel documentation:
 
     http://camel.apache.org/writing-components.html
     
+
+TODO: Update this to reflect changes.
