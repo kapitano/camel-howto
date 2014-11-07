@@ -28,7 +28,7 @@ public class HowtoComponentTest extends CamelTestSupport {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMinimumMessageCount(1);
 
-        Thread.sleep(4000);
+        Thread.sleep(4100);
 
         System.out.println("Got " + mock.getReceivedCounter() + " messages");
         assertMockEndpointsSatisfied();
