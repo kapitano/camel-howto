@@ -26,7 +26,7 @@ public class HowtoComponentTest extends CamelTestSupport {
     @Test
     public void testHelloWorld() throws Exception {
         MockEndpoint mock = getMockEndpoint("mock:result");
-        mock.expectedMinimumMessageCount(100);
+        mock.expectedMinimumMessageCount(1);
 
         Thread.sleep(5000);
 
