@@ -10,4 +10,6 @@ For more help see the Apache Camel documentation:
 
     http://camel.apache.org/writing-components.html
     
-Another attempt.
+TODO Test Pull request merge plugin vs. pull request publisher
+
+
