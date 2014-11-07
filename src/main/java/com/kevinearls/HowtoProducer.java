@@ -16,29 +16,25 @@
  */
 package com.kevinearls;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
-import org.junit.Test;
+import org.apache.camel.Exchange;
+import org.apache.camel.impl.DefaultProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class HelloWorldComponentTest extends CamelTestSupport {
+/**
+ * The HelloWorld producer.
+ */
+public class HowtoProducer extends DefaultProducer {
+    private static final transient Logger LOG = LoggerFactory.getLogger(HowtoProducer.class);
+    private HowtoEndpoint endpoint;
 
-    @Test
-    public void testHelloWorld() throws Exception {
-        MockEndpoint mock = getMockEndpoint("mock:result");
-        mock.expectedMinimumMessageCount(1);       
-        
-        assertMockEndpointsSatisfied();
+    public HowtoProducer(HowtoEndpoint endpoint) {
+        super(endpoint);
+        this.endpoint = endpoint;
     }
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            public void configure() {
-                from("howto://foo")
-                  .to("howto://bar")
-                  .to("mock:result");
-            }
-        };
+    public void process(Exchange exchange) throws Exception {
+        System.out.println(">>>> Producer got " + exchange.getIn().getBody());
     }
+
 }

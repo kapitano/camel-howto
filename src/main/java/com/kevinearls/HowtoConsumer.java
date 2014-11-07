@@ -17,6 +17,7 @@
 package com.kevinearls;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -25,10 +26,11 @@ import org.apache.camel.impl.ScheduledPollConsumer;
 /**
  * The HelloWorld consumer.
  */
-public class HelloWorldConsumer extends ScheduledPollConsumer {
-    private final HelloWorldEndpoint endpoint;
+public class HowtoConsumer extends ScheduledPollConsumer {
+    private final HowtoEndpoint endpoint;
+    AtomicInteger fud = new AtomicInteger(0);
 
-    public HelloWorldConsumer(HelloWorldEndpoint endpoint, Processor processor) {
+    public HowtoConsumer(HowtoEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
         this.endpoint = endpoint;
     }
@@ -36,10 +38,17 @@ public class HelloWorldConsumer extends ScheduledPollConsumer {
     @Override
     protected int poll() throws Exception {
         Exchange exchange = endpoint.createExchange();
+        fud.incrementAndGet();
+        if (fud.get() % 5 != 0) {
+            System.out.println(">>>> Fud is " + fud.get() + " returning 0");
+            return 0;
+        }
 
         // create a message body
         Date now = new Date();
-        exchange.getIn().setBody("Hello World! The time is " + now);
+        String body = "Hello World! The time is " + now;
+        exchange.getIn().setBody(body);
+        System.out.println(">>>> In HelloWorldConsumer.poll() setting body to " + body);
 
         try {
             // send message to next processor in the route

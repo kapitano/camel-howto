@@ -16,36 +16,22 @@
  */
 package com.kevinearls;
 
-import org.apache.camel.Consumer;
-import org.apache.camel.Processor;
-import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultEndpoint;
+import java.util.Map;
+
+import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
+import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.impl.UriEndpointComponent;
+import org.apache.camel.spi.UriParam;
 
 /**
- * Represents a HelloWorld endpoint.
+ * Represents the component that manages {@link HowtoEndpoint}.
  */
-public class HelloWorldEndpoint extends DefaultEndpoint {
-
-    public HelloWorldEndpoint() {
+public class HowtoComponent extends DefaultComponent {
+    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
+        Endpoint endpoint = new HowtoEndpoint(uri, this);
+        setProperties(endpoint, parameters);
+        return endpoint;
     }
 
-    public HelloWorldEndpoint(String uri, HelloWorldComponent component) {
-        super(uri, component);
-    }
-
-    public HelloWorldEndpoint(String endpointUri) {
-        super(endpointUri);
-    }
-
-    public Producer createProducer() throws Exception {
-        return new HelloWorldProducer(this);
-    }
-
-    public Consumer createConsumer(Processor processor) throws Exception {
-        return new HelloWorldConsumer(this, processor);
-    }
-
-    public boolean isSingleton() {
-        return true;
-    }
 }
